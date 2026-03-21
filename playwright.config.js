@@ -4,5 +4,6 @@ module.exports = {
   webServer: {
     command: 'node server/server.js',
     port: 3000,
+    reuseExistingServer: true,
   },
 };
