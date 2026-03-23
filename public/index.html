@@ -3,40 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>My Blog</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-  <header>
-    <h1>My Blog</h1>
-  </header>
+  <!-- Navigation -->
+  <div id="nav"></div>
 
-  <div id="posts"></div>
-  <h2>Create Post</h2>
-  <input id="title" placeholder="Title">
-  <textarea id="content" placeholder="Content"></textarea>
-  <button onclick="createPost()">Post</button>
-
-  
+  <!-- Main Content -->
   <main>
-    <section class="posts">
-
-      <article class="post">
-        <h2><a href="post.html">My First Post </a></h2>
-        <p>This is a short description of the post.</p>
-        <small>March 2026</small>
-      </article>
-
-      <article class="post">
-        <h2><a href="post.html">Another Post</a></h2>
-        <p>Another short description.</p>
-        <small>March 2026</small>
-      </article>
-
-    </section>
+    <div id="posts"></div>
   </main>
 
-  <script src="script.js"></script>
+  <!-- Nav -->
+  <script src="js/nav.js"></script>
+  <script>
+    document.getElementById('nav').innerHTML = renderNav();
+  </script>
+
+  <!-- App -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
 
 </body>
 </html>
