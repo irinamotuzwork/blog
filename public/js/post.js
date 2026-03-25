@@ -1,35 +1,60 @@
 const container = document.getElementById('post-container');
 
-// Step 1: Extract ID from URL
+// Extract ID from URL
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 
-// Add this console log to check ID extraction
-console.log("Post ID from URL:", id);
-
-async function loadPost() {
-  // Step 2: Fetch post from API
-  const post = await getPost(id);
-
-  // Optional: Log API response to check step 2
-  console.log("API response:", post);
-
-  // Step 3: Render post
-  container.innerHTML = `
-    <h1>${post.title}</h1>
-    <p>${post.content}</p>
-
-    <button onclick="deleteCurrentPost()">Delete</button>
-    <a href="create.html?id=${post.id}">Edit</a>
-  `;
+// Check for valid ID
+if (!id) {
+  container.innerHTML = "<p>Post not found.</p>";
+} else {
+  loadPost(id);
 }
 
+/**
+ * Fetch and render a single post
+ * @param {string} id - Post ID from URL
+ */
+async function loadPost(id) {
+  try {
+    container.innerHTML = "<p>Loading post...</p>";
 
-async function deleteCurrentPost() {
-  await deletePost(id);
-  window.location.href = 'index.html';
+    const post = await getPost(id); // Fetch post from API
+
+    if (!post) {
+      container.innerHTML = "<p>Post not found.</p>";
+      return;
+    }
+
+    // Render post content
+    container.innerHTML = `
+      <h1>${post.title}</h1>
+      <p>${post.content}</p>
+      <div class="post-actions">
+        <button id="delete-btn">Delete</button>
+        <a href="create.html?id=${post.id}">Edit</a>
+      </div>
+    `;
+
+    // Attach delete handler
+    document.getElementById('delete-btn').addEventListener('click', () => deleteCurrentPost(id));
+
+  } catch (error) {
+    console.error("Error loading post:", error);
+    container.innerHTML = "<p>Failed to load post.</p>";
+  }
 }
 
-// Load the post
-loadPost();
-
+/**
+ * Delete current post and redirect
+ * @param {string} id - Post ID to delete
+ */
+async function deleteCurrentPost(id) {
+  try {
+    await deletePost(id); // Call API
+    window.location.href = 'index.html';
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    alert("Failed to delete post.");
+  }
+}
