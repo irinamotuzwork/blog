@@ -1,10 +1,11 @@
 // server.js
-// Node.js + Express backend for a simple blog
-// Handles CRUD operations for posts stored in JSON file
+// Production-ready Node.js + Express backend for blog API
 
 const express = require('express');
-const fs = require('fs');      // for reading/writing JSON file
-const cors = require('cors');  // allow cross-origin requests from frontend
+const fs = require('fs').promises;
+const path = require('path');
+const cors = require('cors');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = 3000;
@@ -12,94 +13,165 @@ const PORT = 3000;
 // ----------------------------
 // Middleware
 // ----------------------------
-app.use(cors());                // allow frontend requests from another origin
-app.use(express.json());        // parse JSON request bodies
-app.use(express.static('public')); // serve static frontend files (HTML, CSS, JS)
+app.use(cors());
+app.use(express.json());
+app.use(morgan('dev'));
+app.use(express.static('public'));
+
+// ----------------------------
+// File Path
+// ----------------------------
+const filePath = path.join(__dirname, 'server', 'posts.json');
 
 // ----------------------------
 // Utility Functions
 // ----------------------------
 
-// Load posts from JSON file
-const getPosts = () => {
-    const data = fs.readFileSync('./server/posts.json', 'utf-8');
-    return JSON.parse(data);
+// Read posts safely
+const getPosts = async () => {
+    try {
+        const data = await fs.readFile(filePath, 'utf-8');
+        return JSON.parse(data);
+    } catch (err) {
+        // File not found or invalid JSON → return empty array
+        return [];
+    }
 };
 
-// Save posts to JSON file
-const savePosts = (posts) => {
-    fs.writeFileSync('./server/posts.json', JSON.stringify(posts, null, 2));
+// Save posts safely
+const savePosts = async (posts) => {
+    await fs.writeFile(filePath, JSON.stringify(posts, null, 2));
+};
+
+// Validate input
+const validatePost = (title, content) => {
+    if (!title || typeof title !== 'string') return "Valid title required";
+    if (!content || typeof content !== 'string') return "Valid content required";
+    return null;
 };
 
 // ----------------------------
-// Routes: CRUD
+// Routes
 // ----------------------------
 
 // GET all posts
-app.get('/api/posts', (req, res) => {
-    const posts = getPosts();
-    res.json(posts);
-});
-
-// GET a single post by ID
-app.get('/api/posts/:id', (req, res) => {
-    const posts = getPosts();
-    const post = posts.find(p => p.id == req.params.id);
-
-    if (!post) {
-        return res.status(404).json({ error: "Post not found" });
+app.get('/api/posts', async (req, res, next) => {
+    try {
+        const posts = await getPosts();
+        res.json(posts);
+    } catch (err) {
+        next(err);
     }
-
-    res.json(post);
 });
 
-// CREATE a new post
-app.post('/api/posts', (req, res) => {
-    const posts = getPosts();
+// GET single post
+app.get('/api/posts/:id', async (req, res, next) => {
+    try {
+        const id = Number(req.params.id);
+        const posts = await getPosts();
 
-    const newPost = {
-        id: Date.now(),                  // unique ID based on timestamp
-        title: req.body.title,
-        content: req.body.content
-    };
+        const post = posts.find(p => p.id === id);
 
-    posts.push(newPost);
-    savePosts(posts);
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
 
-    res.status(201).json(newPost);       // return created post
-});
-
-// UPDATE a post by ID
-app.put('/api/posts/:id', (req, res) => {
-    const posts = getPosts();
-    const post = posts.find(p => p.id == req.params.id);
-
-    if (!post) {
-        return res.status(404).json({ error: "Post not found" });
+        res.json(post);
+    } catch (err) {
+        next(err);
     }
-
-    // Update fields
-    post.title = req.body.title;
-    post.content = req.body.content;
-
-    savePosts(posts);
-    res.json(post);
 });
 
-// DELETE a post by ID
-app.delete('/api/posts/:id', (req, res) => {
-    let posts = getPosts();
-    const postExists = posts.some(p => p.id == req.params.id);
+// CREATE post
+app.post('/api/posts', async (req, res, next) => {
+    try {
+        const { title, content } = req.body;
 
-    if (!postExists) {
-        return res.status(404).json({ error: "Post not found" });
+        const error = validatePost(title, content);
+        if (error) {
+            return res.status(400).json({ error });
+        }
+
+        const posts = await getPosts();
+
+        const newPost = {
+            id: Date.now(),
+            title,
+            content,
+            createdAt: new Date().toISOString()
+        };
+
+        posts.push(newPost);
+        await savePosts(posts);
+
+        res.status(201).json(newPost);
+    } catch (err) {
+        next(err);
     }
+});
 
-    // Filter out the deleted post
-    posts = posts.filter(p => p.id != req.params.id);
-    savePosts(posts);
+// UPDATE post
+app.put('/api/posts/:id', async (req, res, next) => {
+    try {
+        const id = Number(req.params.id);
+        const { title, content } = req.body;
 
-    res.json({ message: "Post deleted" });
+        const posts = await getPosts();
+        const post = posts.find(p => p.id === id);
+
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+
+        // Partial update
+        if (title !== undefined) {
+            if (typeof title !== 'string') {
+                return res.status(400).json({ error: "Invalid title" });
+            }
+            post.title = title;
+        }
+
+        if (content !== undefined) {
+            if (typeof content !== 'string') {
+                return res.status(400).json({ error: "Invalid content" });
+            }
+            post.content = content;
+        }
+
+        post.updatedAt = new Date().toISOString();
+
+        await savePosts(posts);
+        res.json(post);
+    } catch (err) {
+        next(err);
+    }
+});
+
+// DELETE post
+app.delete('/api/posts/:id', async (req, res, next) => {
+    try {
+        const id = Number(req.params.id);
+        const posts = await getPosts();
+
+        const filtered = posts.filter(p => p.id !== id);
+
+        if (filtered.length === posts.length) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+
+        await savePosts(filtered);
+        res.json({ message: "Post deleted" });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// ----------------------------
+// Error Handling Middleware
+// ----------------------------
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: "Internal Server Error" });
 });
 
 // ----------------------------
