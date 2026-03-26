@@ -79,3 +79,154 @@ body {
   font-size: 60px;
   font-weight: 600;
 }
+
+/* ABOUT SECTION */
+.about {
+  background-color: white;
+  color: red;
+  min-height: 100vh;        /* full screen height */
+  display: flex;
+  align-items: center;       /* vertically center content */
+  padding: 100px 20px;       /* big padding for spacing */
+  box-sizing: border-box;
+}
+
+/* Container: text + image side by side */
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;                 /* space between text and image */
+  flex-wrap: wrap;            /* mobile-friendly */
+}
+
+/* Text section */
+.about-text {
+  flex: 1 1 400px;
+}
+
+.about-text h2 {
+  font-size: 48px;           /* bigger header */
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  font-size: 20px;
+  line-height: 1.8;
+}
+
+/* Button styling */
+.about-btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 30px;
+  border: 2px solid red;
+  color: red;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: red;
+  color: white;
+}
+
+.about-buttons {
+  display: flex;
+  gap: 15px;        /* space between buttons */
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.about-btn {
+  padding: 10px 20px;
+  background-color: red;   /* matches your accent */
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.about-btn:hover {
+  background-color: darkred;
+}
+
+/* Optional: GitHub button variant */
+.about-buttons {
+  display: flex;
+  gap: 15px;        /* space between buttons */
+  margin-top: 20px;
+}
+
+.about-btn {
+  padding: 12px 30px;          /* size matches both buttons */
+  border: 2px solid red;       /* red border */
+  background-color: red;        /* red fill for default */
+  color: white;                 /* text color */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.about-btn:hover {
+  background-color: white;
+  color: red;
+  border-color: red;
+}
+
+/* Image container */
+.about-image img {
+  width: 300px;          /* adjust size as needed */
+  height: 300px;         /* make height equal to width for a perfect circle */
+  border-radius: 50%;    /* makes the image circular */
+  display: block;
+  margin: 0 auto;        /* centers it */
+  object-fit: cover;     /* ensures the image fills the circle without distortion */
+}
+
+/* Image itself */
+.about-image img {
+  width: 300px;          /* set default width */
+  max-width: 100%;       /* responsive on small screens */
+  height: auto;          /* keep aspect ratio */
+  border-radius: 10px;   /* rounded corners */
+  display: block;        /* ensures proper layout */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);  /* subtle shadow */
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+  .about-container {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .about-text h2 {
+    font-size: 36px;
+  }
+
+  .about-text p {
+    font-size: 18px;
+  }
+}
+
+/* FOOTER */
+.footer {
+  background-color: red;   /* site background color */
+  color: white;              /* text color */
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
