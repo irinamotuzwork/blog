@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Nav Container -->
+  <div id="nav"></div>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- LANDING SECTION -->
+    <section class="landing">
+      <h1>Blog</h1>
+    </section>
+
+    <!-- BLOG POSTS SECTION -->
+    <section class="blog-section">
+      <div class="blog-container">
+        <div class="blog-header">
+          <h2>Latest Posts</h2>
+          <a href="api-testing.html" class="blog-api-link">API Testing</a>
+        </div>
+        <div id="posts-container" class="posts-grid">
+          <!-- Posts will be loaded here dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="footer">
+      <div class="footer-container">
+        <p>&copy; 2026 Irina Motuz. All rights reserved.</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/nav.js"></script>
+  <script>
+    // Render navigation after nav.js is loaded
+    document.getElementById('nav').innerHTML = renderNav();
+  </script>
+
+  <script src="js/api.js"></script>
+  <script src="js/blog.js"></script>
+
+</body>
+</html>

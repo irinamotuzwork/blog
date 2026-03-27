@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <div id="nav"></div>
+
+  <main>
+<!-- ABOUT SECTION -->
+ <section id="about" class="about">
+  <div class="about-container">
+
+    <!-- Image on the left -->
+    <div class="about-image">
+      <img src="images/profile.jpg" alt="Irina Motuz">
+    </div>
+
+      <!-- Text on the right -->
+    <div class="about-text">
+      <h2>About Me</h2>
+    <p> 
+        I’m Irina Motuz, a QA professional with a passion for automation.
+    </p>
+    <p>
+        This blog documents my journey bxpert in architecting high-velocity validation frameworks and implementing Shift-Left methodologies to accelerate delivery cycles.
+    </p>
+    <p>
+      It also serves as a portfolio to demonstrate QA best practices, including UI, API, 
+      and end-to-end testing, as well as automation strategies using Playwright and CI/CD with GitHub Actions.
+    </p>
+        <!-- Buttons -->
+      <div class="about-buttons">
+        <a href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank" class="about-btn">LinkedIn</a>
+        <a href="https://github.com/YOUR-GITHUB" target="_blank" class="about-btn">GitHub</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  </main>
+
+  <script src="js/nav.js"></script>
+  <script>
+    document.getElementById('nav').innerHTML = renderNav();
+  </script>
+
+</body>
+</html>

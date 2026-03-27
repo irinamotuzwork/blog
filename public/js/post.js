@@ -1,60 +1,109 @@
-const container = document.getElementById('post-container');
+// API Testing Functionality for Blog
 
-// Extract ID from URL
-const params = new URLSearchParams(window.location.search);
-const id = params.get('id');
-
-// Check for valid ID
-if (!id) {
-  container.innerHTML = "<p>Post not found.</p>";
-} else {
-  loadPost(id);
+// Helper function to display results
+function displayResult(elementId, data, isError = false) {
+  const element = document.getElementById(elementId);
+  element.innerHTML = '';
+  element.className = 'api-result ' + (isError ? 'error' : 'success');
+  
+  const pre = document.createElement('pre');
+  pre.textContent = JSON.stringify(data, null, 2);
+  element.appendChild(pre);
 }
 
-/**
- * Fetch and render a single post
- * @param {string} id - Post ID from URL
- */
-async function loadPost(id) {
+// Helper function to clear results
+function clearResult(elementId) {
+  const element = document.getElementById(elementId);
+  element.innerHTML = '';
+  element.className = 'api-result';
+}
+
+// GET ALL POSTS
+document.getElementById('get-all-btn').addEventListener('click', async () => {
   try {
-    container.innerHTML = "<p>Loading post...</p>";
-
-    const post = await getPost(id); // Fetch post from API
-
-    if (!post) {
-      container.innerHTML = "<p>Post not found.</p>";
-      return;
-    }
-
-    // Render post content
-    container.innerHTML = `
-      <h1>${post.title}</h1>
-      <p>${post.content}</p>
-      <div class="post-actions">
-        <button id="delete-btn">Delete</button>
-        <a href="create.html?id=${post.id}">Edit</a>
-      </div>
-    `;
-
-    // Attach delete handler
-    document.getElementById('delete-btn').addEventListener('click', () => deleteCurrentPost(id));
-
+    clearResult('get-all-result');
+    const posts = await getPosts();
+    displayResult('get-all-result', posts);
   } catch (error) {
-    console.error("Error loading post:", error);
-    container.innerHTML = "<p>Failed to load post.</p>";
+    console.error('Error fetching all posts:', error);
+    displayResult('get-all-result', { error: 'Failed to fetch posts' }, true);
   }
-}
+});
 
-/**
- * Delete current post and redirect
- * @param {string} id - Post ID to delete
- */
-async function deleteCurrentPost(id) {
+// GET SINGLE POST
+document.getElementById('get-single-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
   try {
-    await deletePost(id); // Call API
-    window.location.href = 'index.html';
+    clearResult('get-single-result');
+    const id = document.getElementById('get-single-id').value;
+    const post = await getPost(id);
+    displayResult('get-single-result', post);
   } catch (error) {
-    console.error("Error deleting post:", error);
-    alert("Failed to delete post.");
+    console.error('Error fetching post:', error);
+    displayResult('get-single-result', { error: 'Failed to fetch post' }, true);
   }
-}
+});
+
+// CREATE POST
+document.getElementById('create-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    clearResult('create-result');
+    const title = document.getElementById('create-title').value;
+    const content = document.getElementById('create-content').value;
+    
+    const newPost = await createPost({ title, content });
+    displayResult('create-result', newPost);
+    
+    // Clear form
+    document.getElementById('create-title').value = '';
+    document.getElementById('create-content').value = '';
+  } catch (error) {
+    console.error('Error creating post:', error);
+    displayResult('create-result', { error: 'Failed to create post' }, true);
+  }
+});
+
+// UPDATE POST
+document.getElementById('update-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    clearResult('update-result');
+    const id = document.getElementById('update-id').value;
+    const title = document.getElementById('update-title').value;
+    const content = document.getElementById('update-content').value;
+    
+    const updateData = {};
+    if (title) updateData.title = title;
+    if (content) updateData.content = content;
+    
+    const updatedPost = await updatePost(id, updateData);
+    displayResult('update-result', updatedPost);
+    
+    // Clear form
+    document.getElementById('update-id').value = '';
+    document.getElementById('update-title').value = '';
+    document.getElementById('update-content').value = '';
+  } catch (error) {
+    console.error('Error updating post:', error);
+    displayResult('update-result', { error: 'Failed to update post' }, true);
+  }
+});
+
+// DELETE POST
+document.getElementById('delete-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  try {
+    clearResult('delete-result');
+    const id = document.getElementById('delete-id').value;
+    
+    const result = await deletePost(id);
+    displayResult('delete-result', result);
+    
+    // Clear form
+    document.getElementById('delete-id').value = '';
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    displayResult('delete-result', { error: 'Failed to delete post' }, true);
+  }
+});

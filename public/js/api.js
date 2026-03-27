@@ -11,23 +11,26 @@ async function getPost(id) {
 }
 
 async function createPost(data) {
-  await fetch(BASE_URL, {
+  const res = await fetch(BASE_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   });
+  return res.json();
 }
 
 async function updatePost(id, data) {
-  await fetch(`${BASE_URL}/${id}`, {
+  const res = await fetch(`${BASE_URL}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   });
+  return res.json();
 }
 
 async function deletePost(id) {
-  await fetch(`${BASE_URL}/${id}`, {
+  const res = await fetch(`${BASE_URL}/${id}`, {
     method: 'DELETE'
   });
+  return res.json();
 }
