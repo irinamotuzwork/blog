@@ -100,7 +100,7 @@ main {
 }
 
 .landing h1 {
-  font-size: 200px;
+  font-size: 500px;
   font-weight: 600;
 }
 
@@ -189,13 +189,16 @@ main {
 }
 
 .about-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 1000px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  left: 20px; /* keeps image from stretching */
 }
 
 .about-text {
-  text-align: right;
+  text-align: left;
   flex: 1;                       /* take remaining space */
 }
 

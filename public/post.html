@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post - Irina Motuz</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -14,82 +19,16 @@
 
     <!-- LANDING SECTION -->
     <section class="landing">
-      <h1>API Testing</h1>
+      <h1>Post</h1>
     </section>
 
-    <!-- API TESTING SECTION -->
-    <section id="api-testing" class="landing-intro">
-      <div class="intro-container">
-        <div class="intro-text">
-          <h2>Test Blog API Endpoints</h2>
-          <p>Use the forms below to test various API endpoints for the blog.</p>
-          <a href="blog.html" class="api-blog-link">View Blog</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- GET ALL POSTS SECTION -->
-    <section class="api-section">
-      <div class="api-container">
-        <h3>GET All Posts</h3>
-        <p>Fetch all blog posts from the API</p>
-        <button id="get-all-btn" class="api-btn">Get All Posts</button>
-        <div id="get-all-result" class="api-result"></div>
-      </div>
-    </section>
-
-    <!-- GET SINGLE POST SECTION -->
-    <section class="api-section">
-      <div class="api-container">
-        <h3>GET Single Post</h3>
-        <p>Fetch a specific post by ID</p>
-        <form id="get-single-form" class="api-form">
-          <input type="number" id="get-single-id" placeholder="Enter Post ID" required>
-          <button type="submit" class="api-btn">Get Post</button>
-        </form>
-        <div id="get-single-result" class="api-result"></div>
-      </div>
-    </section>
-
-    <!-- CREATE POST SECTION -->
-    <section class="api-section">
-      <div class="api-container">
-        <h3>CREATE Post</h3>
-        <p>Create a new blog post</p>
-        <form id="create-form" class="api-form">
-          <input type="text" id="create-title" placeholder="Post Title" required>
-          <textarea id="create-content" placeholder="Post Content" required></textarea>
-          <button type="submit" class="api-btn">Create Post</button>
-        </form>
-        <div id="create-result" class="api-result"></div>
-      </div>
-    </section>
-
-    <!-- UPDATE POST SECTION -->
-    <section class="api-section">
-      <div class="api-container">
-        <h3>UPDATE Post</h3>
-        <p>Update an existing post by ID</p>
-        <form id="update-form" class="api-form">
-          <input type="number" id="update-id" placeholder="Post ID" required>
-          <input type="text" id="update-title" placeholder="New Title (optional)">
-          <textarea id="update-content" placeholder="New Content (optional)"></textarea>
-          <button type="submit" class="api-btn">Update Post</button>
-        </form>
-        <div id="update-result" class="api-result"></div>
-      </div>
-    </section>
-
-    <!-- DELETE POST SECTION -->
-    <section class="api-section">
-      <div class="api-container">
-        <h3>DELETE Post</h3>
-        <p>Delete a post by ID</p>
-        <form id="delete-form" class="api-form">
-          <input type="number" id="delete-id" placeholder="Post ID" required>
-          <button type="submit" class="api-btn">Delete Post</button>
-        </form>
-        <div id="delete-result" class="api-result"></div>
+    <!-- POST SECTION -->
+    <section class="post-section">
+      <div class="post-container">
+        <article id="post-content" class="post-full">
+          <!-- Post content will be loaded dynamically -->
+        </article>
+        <a href="blog.html" class="back-link">← Back to Blog</a>
       </div>
     </section>
 

@@ -1,3 +1,4 @@
+
 function renderNav() {
   return `
     <nav class="navbar">
