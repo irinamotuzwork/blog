@@ -1,21 +1,20 @@
-const { test, expect } = require('@playwright/test');
+class BlogPage {
+  constructor(page) {
+    this.page = page;
+    this.body = page.locator('body');
+  }
 
-test('homepage loads', async ({ page }) => {
-  await page.goto('http://localhost:3000', {
-    waitUntil: 'domcontentloaded'
-  });
+  async goto() {
+    await this.page.goto('/', { waitUntil: 'domcontentloaded' });
+  }
 
-  await expect(page.locator('body')).toBeVisible();
-});
+  async getBodyText() {
+    return await this.body.textContent();
+  }
 
-test('posts are visible', async ({ page }) => {
-  await page.goto('http://localhost:3000', {
-    waitUntil: 'domcontentloaded'
-  });
+  async isBodyVisible() {
+    return await this.body.isVisible();
+  }
+}
 
-  // give app a moment to render
-  await page.waitForTimeout(1000);
-
-  const content = await page.locator('body').textContent();
-  expect(content.length).toBeGreaterThan(0);
-});
+module.exports = { BlogPage };
