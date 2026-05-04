@@ -12,28 +12,41 @@
 <body>
 
   <!-- Nav Container -->
-  <div id="nav"></div>
+  <div id="nav" data-testid="nav-container"></div>
 
   <!-- Main Content -->
-  <main>
+  <main data-testid="post-page">
 
     <!-- LANDING SECTION -->
-    <section class="landing">
-      <h1>Post</h1>
+    <section class="landing" data-testid="post-landing">
+      <h1 data-testid="post-page-title">Post</h1>
     </section>
 
     <!-- POST SECTION -->
-    <section class="post-section">
-      <div class="post-container">
-        <article id="post-content" class="post-full">
+    <section class="post-section" data-testid="post-section">
+      <div class="post-container" data-testid="post-container">
+
+        <article 
+          id="post-content" 
+          class="post-full"
+          data-testid="post-full"
+        >
           <!-- Post content will be loaded dynamically -->
         </article>
-        <a href="blog.html" class="back-link">← Back to Blog</a>
+
+        <a 
+          href="blog.html" 
+          class="back-link"
+          data-testid="back-to-blog"
+        >
+          ← Back to Blog
+        </a>
+
       </div>
     </section>
 
     <!-- FOOTER SECTION -->
-    <footer class="footer">
+    <footer class="footer" data-testid="footer">
       <div class="footer-container">
         <p>&copy; 2026 Irina Motuz. All rights reserved.</p>
       </div>
@@ -44,7 +57,6 @@
   <!-- Scripts -->
   <script src="js/nav.js"></script>
   <script>
-    // Render navigation after nav.js is loaded
     document.getElementById('nav').innerHTML = renderNav();
   </script>
 

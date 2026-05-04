@@ -1,121 +1,98 @@
-# My Personal Blog – QA Portfolio
-
-[![CI](https://github.com/irinamotuzwork/blog/actions/workflows/main.yml/badge.svg)](https://github.com/irinamotuzwork/blog/actions)
+# My Personal Blog – QA Automation Portfolio
 
 ## Project Overview
-This is a full-stack blog application built to demonstrate professional QA engineering standards across UI, API, and End-to-End (E2E) testing layers. The project focuses on automated validation, test maintainability, and CI/CD integration.
-
-- **Backend:** Node.js + Express  
-- **Frontend:** HTML, CSS, JavaScript  
-- **Testing:** Playwright (UI + API + E2E)  
-- **Architecture:** Page Object Model (POM) for test scalability  
-- **CI/CD:** GitHub Actions  
-
----
-
-## Table of Contents
-- [Tech Stack](#tech-stack)
-- [Features](#features)
-- [API Endpoints](#api-endpoints)
-- [Automation & QA Strategy](#automation--qa-strategy)
-- [Manual Testing Checklist](#manual-testing-checklist)
-- [CI/CD & Observability](#cicd--observability)
-- [How to Run](#how-to-run)
-- [License](#license)
-- [Contact Information](#contact-information)
+This project is a full-stack blog application designed to showcase production-grade QA Engineering practices. It validates application quality across **UI, API, and End-to-End layers** using a unified Playwright framework, with a focus on **modular test architecture, reliability, and CI/CD integration**.
 
 ---
 
 ## Tech Stack
-- **Languages:** JavaScript (ES6+)
-- **Frameworks:** Node.js, Express.js
-- **Automation:** Playwright
-- **CI/CD:** GitHub Actions
-- **Reporting:** Playwright HTML Reporter
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Backend** | Node.js, Express.js |
+| **Frontend** | HTML5, CSS3, JavaScript (ES6+) |
+| **Automation** | Playwright (UI + API + E2E), TypeScript-ready |
+| **Design Pattern** | Page Object Model (POM) |
+| **CI/CD** | GitHub Actions |
+| **Reporting** | Playwright HTML Reporter, Trace Viewer |
 
 ---
 
-## Features
-
-### Core Features (MVP)
-- **Post Management (CRUD):** Full lifecycle of blog posts (Create, Read, Update, Delete).  
-- **Navigation:** Dynamic routing for post details and 404 error handling for invalid paths.  
-- **UI States:** Validated loading, empty, and error states.  
-- **Form Validation:** Client-side and server-side enforcement of required fields.  
+## Core Features
+- **Full CRUD Operations:** Create, Read, Update, and Delete blog posts.
+- **Dynamic Routing:** Seamless navigation for post details.
+- **Robust Error Handling:** Custom 404 pages and server-side validation.
+- **UI State Management:** Handling of loading states, empty feeds, and error banners.
 
 ---
 
 ## API Endpoints
-The following endpoints are validated for both functional correctness and schema integrity.
 
-| Method | Endpoint | Description | Expected Success |
+| Method | Endpoint | Description | Expected Status |
 | :--- | :--- | :--- | :--- |
-| **GET** | `/api/posts` | List all blog posts | `200 OK` |
-| **GET** | `/api/posts/:id` | View a single post | `200 OK` |
-| **POST** | `/api/posts` | Create a new post | `201 Created` |
-| **PUT** | `/api/posts/:id` | Update an existing post | `200 OK` |
-| **DELETE** | `/api/posts/:id` | Remove a post | `204 No Content` |
+| `GET` | `/api/posts` | Retrieve all posts | 200 OK |
+| `GET` | `/api/posts/:id` | Retrieve single post | 200 OK |
+| `POST` | `/api/posts` | Create new post | 201 Created |
+| `PUT` | `/api/posts/:id` | Update existing post | 200 OK |
+| `DELETE` | `/api/posts/:id` | Delete post | 204 No Content |
 
 ---
 
-## Automation & QA Strategy
+## QA Strategy & Engineering Decisions
 
-### UI Testing (Playwright)
-- **Design Pattern:** Implemented using the **Page Object Model (POM)** to decouple test logic from UI selectors, ensuring a maintainable and scalable suite.
-- **Coverage:** Validates DOM elements, navigation flow, and CSS-driven UI states (error/empty).
-- **Cross-Browser:** Configured to run across Chromium, Firefox, and WebKit to ensure cross-platform compatibility.
+### 1. Test Pyramid Implementation
+- **API Tests:** High-speed validation of business logic and data integrity.
+- **UI Tests:** Validation of critical user journeys and visual consistency.
+- **E2E Tests:** Verification of the complete system flow from the frontend to the database.
 
-### API Testing
-- **Contract Testing:** Verifies response structures, headers, and status codes.
-- **Negative Testing:** Validates application resilience against invalid IDs, empty payloads, and malformed JSON.
+### 2. Framework Design
+- **Unified Framework:** One tool (Playwright) for both API and UI testing to reduce context switching.
+- **Page Object Model (POM):** Decouples test logic from UI locators for high maintainability.
+- **Isolation & Idempotency:** Each test is independent with its own data setup; no "leaky" state between runs.
+- **API-Driven Setup:** Uses API calls to set up or tear down data for UI tests, significantly increasing execution speed.
 
-### End-to-End (E2E) Testing
-- Validates the "Happy Path": Creating a post via the UI, verifying its existence in the API, and ensuring it persists after a page refresh.
+### 3. CI/CD & Observability
+- **GitHub Actions:** Automated regression suite triggered on every `Push` or `Pull Request`.
+- **Failure Analysis:** Automated collection of **Traces, Screenshots, and Video** artifacts for rapid debugging.
+- **Cross-Browser Testing:** Validation across Chromium, Firefox, and WebKit (Safari).
 
-### Test Strategy Highlights
-- **Test Pyramid:** High-volume API tests for speed, supported by critical UI and E2E flows.
-- **Isolation:** Tests are designed to be independent and idempotent, using fresh data states for each run.
-- **Reporting:** Automatic generation of HTML reports for every test run.
+---
+
+## AI-Assisted Quality Engineering
+This project integrates AI tools into the development lifecycle to:
+- **Scenario Discovery:** Using LLMs to brainstorm complex edge cases and boundary values.
+- **Locator Optimization:** Leveraging AI to identify more resilient CSS/XPath selectors.
+- **Code Refactoring:** Ensuring clean, DRY (Don't Repeat Yourself) code within the automation suite.
 
 ---
 
 ## Manual Testing Checklist
 
 ### Functional & Edge Cases
-- [ ] **CRUD:** Verify post persistence after browser restart.
-- [ ] **Validation:** Submit forms with whitespace-only strings or special characters.
-- [ ] **Resilience:** Verify UI behavior when the backend API is unreachable (Error state handling).
+- [ ] CRUD persistence after page refresh.
+- [ ] Form validation (empty fields, whitespace, special characters).
+- [ ] API failure handling (simulating offline/500 scenarios).
 
 ### UI/UX & Accessibility
-- [ ] **Responsiveness:** Verify layout integrity on mobile and tablet breakpoints.
-- [ ] **Keyboard Nav:** Ensure all buttons/links are reachable and actionable via `Tab` and `Enter`.
-
----
-
-## CI/CD & Observability
-- **Automated Triggers:** GitHub Actions executes the full test suite on every `push` and `pull_request`.
-- **Failure Artifacts:** On test failure, the CI pipeline automatically captures and saves **Playwright Traces** and **Video Recordings** as build artifacts for rapid debugging.
+- [ ] Responsive design (Mobile, Tablet, Desktop).
+- [ ] Keyboard navigation support.
+- [ ] Basic accessibility checks (ARIA labels, color contrast).
 
 ---
 
 ## How to Run
 
-### 1. Clone Repository
+### 1. Setup
 ```bash
-git clone https://github.com/irinamotuzwork/blog.git
+# Clone repository
+git clone [https://github.com/irinamotuzwork/blog.git](https://github.com/irinamotuzwork/blog.git)
 cd blog
 
 # Install dependencies
 npm install
 
-# Start the local server
-# Keep this terminal window open
-npm start
+# Install Playwright Browsers
+npx playwright install
 
-# Run Playwright tests (headless)
-npm test
-
-# Open Playwright Report
-npx playwright show-report
-
+---
 

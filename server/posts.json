@@ -1,10 +1,5 @@
 [
   {
-    "id": 1773947726368,
-    "title": "Test",
-    "content": "xgdsagdhj"
-  },
-  {
     "id": 1773947752757,
     "title": "Test",
     "content": "My new Post"
@@ -33,5 +28,18 @@
     "content": "Old content",
     "createdAt": "2026-04-01T14:56:35.990Z",
     "updatedAt": "2026-04-01T14:56:35.993Z"
+  },
+  {
+    "id": 1777925522124,
+    "title": "Updated Post",
+    "content": "{\n  \"id\": 1777925522124,\n  \"title\": \"Test\",\n  \"content\": \"Test 5/4\",\n  \"createdAt\": \"2026-05-04T20:12:02.124Z\"\n}",
+    "createdAt": "2026-05-04T20:12:02.124Z",
+    "updatedAt": "2026-05-04T20:12:23.410Z"
+  },
+  {
+    "id": 1777925796394,
+    "title": "Test New",
+    "content": "New Post",
+    "createdAt": "2026-05-04T20:16:36.394Z"
   }
 ]

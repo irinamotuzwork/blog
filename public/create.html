@@ -12,36 +12,65 @@
 <body>
 
   <!-- Nav Container -->
-  <div id="nav"></div>
+  <div id="nav" data-testid="nav-container"></div>
 
   <!-- Main Content -->
-  <main>
+  <main data-testid="create-post-page">
 
     <!-- LANDING SECTION -->
-    <section class="landing">
-      <h1>Create Post</h1>
+    <section class="landing" data-testid="create-post-landing">
+      <h1 data-testid="create-post-title">Create Post</h1>
     </section>
 
     <!-- CREATE POST SECTION -->
-    <section class="create-section">
-      <div class="create-container">
-        <h2>Create New Post</h2>
-        <form id="post-form" class="create-form">
-          <div class="form-group">
+    <section class="create-section" data-testid="create-section">
+      <div class="create-container" data-testid="create-container">
+
+        <h2 data-testid="form-heading">Create New Post</h2>
+
+        <form 
+          id="post-form" 
+          class="create-form"
+          data-testid="post-form"
+        >
+          <div class="form-group" data-testid="title-group">
             <label for="title">Title</label>
-            <input type="text" id="title" placeholder="Enter post title" required />
+            <input 
+              type="text" 
+              id="title" 
+              placeholder="Enter post title" 
+              required
+              data-testid="post-title-input"
+            />
           </div>
-          <div class="form-group">
+
+          <div class="form-group" data-testid="content-group">
             <label for="content">Content</label>
-            <textarea id="content" placeholder="Write your post content here..." required></textarea>
+            <textarea 
+              id="content" 
+              placeholder="Write your post content here..." 
+              required
+              data-testid="post-content-input"
+            ></textarea>
           </div>
-          <button type="submit" class="submit-btn">Save Post</button>
+
+          <button 
+            type="submit" 
+            class="submit-btn"
+            data-testid="submit-post"
+          >
+            Save Post
+          </button>
         </form>
+
+        <!-- Optional: success / error message -->
+        <div data-testid="form-message" style="display:none;"></div>
+
       </div>
     </section>
 
     <!-- FOOTER SECTION -->
-    <footer class="footer">
+    <footer class="footer" data-testid="footer">
       <div class="footer-container">
         <p>&copy; 2026 Irina Motuz. All rights reserved.</p>
       </div>
@@ -52,7 +81,6 @@
   <!-- Scripts -->
   <script src="js/nav.js"></script>
   <script>
-    // Render navigation after nav.js is loaded
     document.getElementById('nav').innerHTML = renderNav();
   </script>
 
