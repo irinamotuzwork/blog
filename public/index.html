@@ -1,49 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
   <!-- Nav Container -->
-<div id="nav"></div>
+  <div id="nav"></div>
 
   <!-- Main Content -->
   <main>
 
- <!-- LANDING SECTION -->
-<section class="landing">
-  <h1>Hi!</h1>
-</section>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <p class="eyebrow">QA AUTOMATION • PLAYWRIGHT • AI WORKFLOWS</p>
+          <h1>Irina Motuz</h1>
+          <h2>QA Automation Engineer focused on Playwright, Java Script, and AI-driven testing systems.</h2>
+          <p class="description">Building modern browser automation frameworks, AI-assisted QA workflows, and scalable
+            end-to-end testing systems with Playwright and Java Script.
+          </p>
+          <div class="cta-buttons">
+            <a href="#projects" class="cta-button">View Projects</a>
+            <a href="/resume.pdf" class="cta-button secondary">Download Resume</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="terminal">
+            <div class="terminal-top">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
 
-<!-- LANDING INTRO SECTION -->
-<section id="landing-intro" class="landing-intro">
-  <div class="intro-container">
-    <div class="intro-text">
-      <h2>I'm Irina Motuz</h2>
-    </div>
-  </div>
-</section>
+            <div class="terminal-content">
+              <span>$ npx playwright test</span>
+              <span>Running 12 tests...</span>
+              <span>✓ Passed: Login flow</span>
+              <span>✓ Passed: API validation</span>
+            </div>
+          </div>
 
-<!-- FOOTER SECTION  -->
-<footer class="footer">
-  <div class="footer-container">
-    <p>&copy; 2026 Irina Motuz. All rights reserved.</p>
-  </div>
-</footer>
+          <div class="code-snippet">
+            <pre><code>await page.locator('#submit').click();</code></pre>
+          </div>
+    </section>
 
-  </main> 
+    <!-- FOOTER SECTION  -->
+    <footer class="footer">
+      <div class="footer-container">
+        <p>&copy; 2026 Irina Motuz. All rights reserved.</p>
+      </div>
+    </footer>
+
+  </main>
 
   <!-- Scripts -->
   <script src="js/nav.js"></script>
   <script>
     // Render navigation after nav.js is loaded
     document.getElementById('nav').innerHTML = renderNav();
-  </script> 
+  </script>
 
   <script src="js/api.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    // Simple fade-in for hero
+    document.addEventListener('DOMContentLoaded', () => {
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        hero.style.opacity = '0';
+        hero.style.transform = 'translateY(20px)';
+        hero.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        setTimeout(() => {
+          hero.style.opacity = '1';
+          hero.style.transform = 'translateY(0)';
+        }, 100);
+      }
+    });
+  </script>
 
 </body>
+
 </html>
